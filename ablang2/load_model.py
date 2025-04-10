@@ -11,7 +11,7 @@ ablang1_models = ["ablang1-heavy", "ablang1-light"]
 ablang2_models = ["ablang2-paired", "tcrlang-paired"]
 
 
-def load_model(model_to_use = "ablang2-paired", random_init = False, device = 'cpu'):
+def load_model(model_to_use = "ablang2-paired", model_dir='config/ablang/ablang2-weights/', random_init = False, device = 'cpu'):
 
     if model_to_use in ablang1_models:
         AbLang, tokenizer, hparams = fetch_ablang1(
@@ -21,7 +21,8 @@ def load_model(model_to_use = "ablang2-paired", random_init = False, device = 'c
         )
     elif model_to_use in ablang2_models:
         AbLang, tokenizer, hparams = fetch_ablang2(
-            model_to_use, 
+            model_to_use,
+            model_dir='config/ablang/ablang2-weights/'
             random_init=random_init, 
             device=device
         )
@@ -83,12 +84,14 @@ def fetch_ablang1(model_to_use, random_init=False, device='cpu'):
     return AbLang, tokenizer, hparams
 
 
-def fetch_ablang2(model_to_use, random_init=False, device='cpu'):
+def fetch_ablang2(model_to_use, model_dir='config/ablang/ablang2-weights/', random_init=False, device='cpu'):
     
     from .models.ablang2 import ablang
     from .models.ablang2 import tokenizers
     
-    if model_to_use in ablang2_models:
+    if model_dir:
+        local_model_folder = model_dir
+    elif model_to_use in ablang2_models:
         local_model_folder = download_model(model_to_use)
     else:
         local_model_folder = model_to_use
