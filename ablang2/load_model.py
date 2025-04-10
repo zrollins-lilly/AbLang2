@@ -22,7 +22,7 @@ def load_model(model_to_use = "ablang2-paired", model_dir='config/ablang/ablang2
     elif model_to_use in ablang2_models:
         AbLang, tokenizer, hparams = fetch_ablang2(
             model_to_use,
-            model_dir='config/ablang/ablang2-weights/'
+            model_dir='config/ablang/ablang2-weights/',
             random_init=random_init, 
             device=device
         )
